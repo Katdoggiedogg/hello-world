@@ -7,3 +7,72 @@ output: html_document
 
 # Learning ggplot2
 
+```{R}
+# Load and short-view data
+ohi_data <- read.csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/OHI_global_data.csv")
+head(ohi_data)
+summary(ohi_data)
+table(ohi_data$georegion_one)
+table(ohi_data$georegion_two)
+```
+
+## Plotting
+```{R}
+ggplot(data = ohi_data, aes(x = OHI_score, y = HDI))
+
+ggplot(data = ohi_data, aes(x = georegion_one, y =OHI_score)) + 
+  geom_point()
+
+ggplot(data = ohi_data, aes(x = georegion_one, y =OHI_score)) + 
+  geom_jitter(width=0.2)
+
+ggplot(data = ohi_data, aes(x = georegion_one)) + 
+  geom_bar()
+
+ggplot(data = ohi_data, aes(x = HDI)) + 
+  geom_histogram()
+```
+
+## Working with summary (average) values
+```{R}
+ohi_summary <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/OHI_scores_georegion_summary.csv")
+
+ohi_summary
+
+ggplot(data = ohi_summary, aes(x = georegions, y = OHI_score_average)) + 
+  geom_bar(stat="identity") +
+  geom_jitter(data=ohi_data, aes(x=georegion_one, y=OHI_score))
+```
+
+## Changing point size
+```{R}
+ggplot(data = ohi_data, aes(x = OHI_score, y = HDI, size = coastal_pop)) + 
+  geom_point()
+```
+
+## Changing colour - continuous variable
+```{R}
+ggplot(data = ohi_data, aes(x = OHI_score, y = HDI, color = coastal_pop)) + 
+  geom_point()
+```
+
+## Changing colour - dicrete variable
+```{R}
+ggplot(data = ohi_data, aes(x = OHI_score, y = HDI, color = georegion_one)) + 
+  geom_point()
+```
+
+## Change shape of points
+```{R}
+ggplot(data = ohi_data, aes(x = OHI_score, y = HDI, shape = georegion_one)) + 
+  geom_point()
+```
+
+## Adding labels
+```{R}
+ggplot(data = ohi_data, aes(x = OHI_score, y = HDI, label=country)) + 
+  geom_point(aes(x = OHI_score, y = HDI)) +
+  geom_text()
+```
+
+Customise your plot!
